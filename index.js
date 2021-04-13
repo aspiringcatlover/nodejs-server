@@ -1,5 +1,4 @@
 const express = require('express');
-const { getNASFileList } = require('./services/video-service');
 const app = express()
 const port = 3001
 const videoService = require('./services/video-service');
@@ -21,7 +20,7 @@ app.get('/device-info', (req,res) =>{
 app.get('/nas-info',(req,res) =>{
   let device_id = req.query.device_id;
   
-  let result = getNASFileList({"device_id": device_id, "date": ""});
+  let result = videoService.getNASFileList({"device_id": device_id, "date": ""});
   res.send(result);
 })
 
@@ -30,7 +29,7 @@ app.get('/video-metadata',(req,res) =>{
   let device_id = req.query.device_id;
   let file_id = req.query.file_id;
   
-  let result = getNASFile({"device_id": device_id, "file_id": file_id});
+  let result = videoService.getNASFile({"device_id": device_id, "file_id": file_id});
   res.send(result);
 })
 
@@ -38,7 +37,7 @@ app.get('/video-metadata',(req,res) =>{
 app.delete('/video-metadata',(req,res) =>{
   let file_name = req.query.file_name;
  
-  let result = deleteNASFile(file_name);
+  let result = videoService.deleteNASFile(file_name);
   res.send(result);
 })
 
