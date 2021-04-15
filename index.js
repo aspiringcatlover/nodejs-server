@@ -12,18 +12,27 @@ app.get('/', (req, res) => {
 
 //get device info
 app.get('/device-info', async(req,res) =>{
+  console.log('get /device-info');
   let device_id = req.query.device_id;
   
   let result = await videoService.getCCTVDeviceInfo(device_id);
   res.send(result);
 })
 
+//get list of cctv devices
+app.get('/device-list', async(req,res) =>{
+  console.log('get /device-list');
+  let result = await videoService.getCCTVDeviceIDBySystemID();
+
+  res.send(result.data[0]);
+})
+
 //get NAS file list
 app.get('/nas-info',async (req,res) =>{
   console.log('get /nas-info');
   let device_id = req.query.device_id;
-
   let result = await videoService.getNASFileList({"device_id": device_id});
+ 
   res.send(result);
 })
 
