@@ -31,27 +31,31 @@ app.get('/device-list', async(req,res) =>{
 app.get('/nas-info',async (req,res) =>{
   console.log('get /nas-info');
   let device_id = req.query.device_id;
+  try{
   let result = await videoService.getNASFileList({"device_id": device_id});
- 
   res.send(result);
+  }
+  catch (err){
+  }
+ 
 })
 
 //get static video path
-app.get('/video-metadata',(req,res) =>{
+app.get('/video-metadata',async (req,res) =>{
   console.log('get /video-metadata');
   let device_id = req.query.device_id;
   let file_id = req.query.file_id;
   
-  let result = videoService.getNASFile({"device_id": device_id, "file_id": file_id});
+  let result = await videoService.getNASFile({"device_id": device_id, "file_id": file_id});
   res.send(result);
 })
 
 //delete video metadata
-app.delete('/video-metadata',(req,res) =>{
+app.delete('/video-metadata',async (req,res) =>{
   console.log('delete /video-metadata');
   let file_name = req.query.file_name;
  
-  let result = videoService.deleteNASFile(file_name);
+  let result = await videoService.deleteNASFile(file_name);
   res.send(result);
 })
 
